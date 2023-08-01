@@ -33,7 +33,7 @@ RUN POCKETBASE_ENCRYPTION_KEY="$(echo -n $RANDOM | sha1sum | awk '{print $1}')"
 RUN export POCKETBASE_ENCRYPTION_KEY
 RUN echo "WARNING: POCKETBASE ENCRYPTION_KEY variable was not set or was not string!"
 RUN echo "Secret key was automatically generated: ${POCKETBASE_ENCRYPTION_KEY}"
-RUN	echo "Please note down this value and set the POCKETBASE_ENCRYPTION_KEY within your deployment to avoid loosing access to your data!"
+RUN echo "Please note down this value and set the POCKETBASE_ENCRYPTION_KEY within your deployment to avoid loosing access to your data!"
 
 ENV PB_RELEASE_URL=https://github.com/pocketbase/pocketbase/releases/download
 
@@ -43,11 +43,13 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
     wget ${PB_RELEASE_URL}/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_arm64.zip -O /tmp/pocketbase.zip ; \
     elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then \
     wget ${PB_RELEASE_URL}/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_armv7.zip -O /tmp/pocketbase.zip ; \
+    elif [ "$TARGETPLATFORM" = "linux/arm/v6" ]; then \
+    wget ${PB_RELEASE_URL}/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_arm64.zip -O /tmp/pocketbase.zip ; \
     elif [ "$TARGETPLATFORM" = "darwin/amd64" ]; then \
     wget ${PB_RELEASE_URL}/v${PB_VERSION}/pocketbase_${PB_VERSION}_darwin_amd64.zip -O /tmp/pocketbase.zip ; \
     fi
 
-RUN apk update 
+RUN apk update
 RUN apk add --no-cache \
     ca-certificates \
     unzip \
@@ -62,10 +64,7 @@ RUN mkdir -p /tmp/pocketbase \
     && rm -rf /tmp/pocketbase /tmp/pocketbase.zip \
     && chmod +x /usr/bin/pocketbase
 
-# RUN echo "docker-entrypoint => version 1.0.0"
-# COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN mkdir pb_data
-# RUN chmod +x /docker-entrypoint.sh
 
 RUN echo "ulimit open files => $PB_ULIMIT_OPEN_FILES"
 RUN ulimit -n ${PB_ULIMIT_OPEN_FILES}
