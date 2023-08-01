@@ -1,0 +1,8 @@
+.env
+dev.env
+prod.env
+
+credentials.json
+
+pocketbase_db/*
+!pocketbase_db/README.md

@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  pocketbase:
+    # platform: ${DOCKER_LISTTARGETOSANDARCH}
+    container_name: pocketbase
+    hostname: pocketbase
+    image: pocketbase
+    build:
+      context: .
+      args:
+        PB_TARGETOS: ${POCKETBASE_TARGETOS}
+        PB_VERSION: "${POCKETBASE_VERSION}"
+        PB_TARGETARCH: "${POCKETBASE_TARGETARCH}"
+        PB_ENCRYPTION_KEY: "${POCKETBASE_ENCRYPTION_KEY}"
+        PB_DATA_DIR: "${POCKETBASE_DATA_DIR}"
+        PB_MIGRATION_DIR: "${POCKETBASE_MIGRATION_DIR}"
+        PB_PUBLIC_DIR: "${POCKETBASE_PUBLIC_DIR}"
+        PB_DEBUG: "${POCKETBASE_DEBUG}"
+        PB_HOST: "${POCKETBASE_HOST}"
+        PB_PORT: "${POCKETBASE_PORT}"
+        PB_CORS: "${POCKETBASE_CORS}"
+        PB_ULIMIT_OPEN_FILES: "${POCKETBASE_ULIMIT_OPEN_FILES}"
+    restart: unless-stopped
+    ports:
+      - "${POCKETBASE_PORT}:${POCKETBASE_PORT}"
+    volumes:
+      - ./pocketbase_db:/pb_data:rw
+      - pocketbase_data_teste:/pb_data
+    networks:
+      - pocketbase_network_teste
+
+networks:
+  pocketbase_network_teste: {}
+
+volumes:
+  pocketbase_data_teste: {}

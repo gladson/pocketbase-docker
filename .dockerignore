@@ -1,0 +1,7 @@
+.env
+dev.env
+prod.env
+local-notes.txt
+Makefile
+docker-compose.yaml
+.gitignore
