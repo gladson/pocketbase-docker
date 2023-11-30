@@ -55,9 +55,11 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
     wget ${PB_RELEASE_URL}/v${PB_VERSION}/pocketbase_${PB_VERSION}_darwin_amd64.zip -O /tmp/pocketbase.zip ; \
     fi
 
-RUN apk update
+RUN apk update && apk --no-cache --upgrade add tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
 RUN apk add --no-cache \
-    tzdata \
     ca-certificates \
     unzip \
     wget \
