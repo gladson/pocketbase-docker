@@ -26,7 +26,6 @@ services:
       - "${POCKETBASE_PORT}:${POCKETBASE_PORT}"
     volumes:
       - ./pocketbase_db:/pb_data:rw
-      - pocketbase_data_teste:/pb_data
     networks:
       - pocketbase_network_teste
 
