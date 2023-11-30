@@ -7,6 +7,8 @@ ARG TARGETVARIANT=${TARGETVARIANT}
 
 ARG BUILDPLATFORM=${BUILDPLATFORM}
 
+ARG TZ=UTC
+
 ARG PB_VERSION=0.17.0
 ARG PB_ENCRYPTION_KEY
 ARG PB_DEBUG
@@ -18,6 +20,8 @@ ARG PB_MIGRATION_DIR=/pb_data/pb_migrations
 ARG PB_HOOKS_DIR=/pb_data/pb_hooks
 ARG PB_PUBLIC_DIR=/pb_data/pb_public
 ARG PB_ULIMIT_OPEN_FILES=1024
+
+ENV TZ="${TZ:-UTC}"
 
 ENV POCKETBASE_VERSION="${PB_VERSION:-0.17.0}" \
     POCKETBASE_ENCRYPTION_KEY="${PB_ENCRYPTION_KEY}" \
@@ -53,6 +57,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
 
 RUN apk update
 RUN apk add --no-cache \
+    tzdata \
     ca-certificates \
     unzip \
     wget \
