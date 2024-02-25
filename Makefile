@@ -22,5 +22,5 @@ docker_build_win:
 	.\set_env.ps1
 	$$Env:PB_VERSION
 	$$Env:POCKETBASE_VERSION
-	docker buildx build . --platform=linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,darwin/amd64 --push -t gladson/pocketbase:latest
-	docker buildx build . --platform=linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,darwin/amd64 --push -t gladson/pocketbase:$$Env:POCKETBASE_VERSION
+	docker buildx build . --platform=linux/amd64,linux/arm64,linux/arm/v7,darwin/amd64 --push -t gladson/pocketbase:latest
+	docker buildx build . --platform=linux/amd64,linux/arm64,linux/arm/v7,darwin/amd64 --push -t gladson/pocketbase:$$Env:POCKETBASE_VERSION
